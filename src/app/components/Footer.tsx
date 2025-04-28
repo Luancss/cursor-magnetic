@@ -1,3 +1,10 @@
+import "../globals.css";
+
 export const Footer = () => {
-  return <div>Footer</div>;
+  return (
+    <footer>
+      <p>Source code on GitHub</p>
+      <p>Luan Carlos</p>
+    </footer>
+  );
 };
