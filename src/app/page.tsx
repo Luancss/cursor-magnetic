@@ -1,12 +1,17 @@
+"use client";
+
+import { useRef } from "react";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const highlightRef = useRef<HTMLDivElement>(null);
+
   return (
     <>
       <Header />
-
-      <div className="container">
+      <div className="container" ref={containerRef}>
         <div className="grid">
           <div className="grid-row">
             <div className="grid-item">
@@ -37,8 +42,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <div className="highlight" />
+        <div className="highlight" ref={highlightRef} />
       </div>
       <Footer />
     </>
