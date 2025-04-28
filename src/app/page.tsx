@@ -1,12 +1,52 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const highlightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const highlight = (highlightRef.current as HTMLDivElement) || null;
+    const gridItems = container?.querySelectorAll(
+      ".grid-item"
+    ) as NodeListOf<HTMLElement>;
+    const firstItem = gridItems?.[0];
+
+    const hightlightColors = [
+      "#E24E1B",
+      "#4381C1",
+      "#F79824",
+      "#04A777",
+      "#5BBC5A",
+      "#21F6FF",
+      "#818D92",
+      "#22AAA1",
+    ] as string[];
+
+    gridItems?.forEach((item, index) => {
+      item.dataset.color = hightlightColors[index % hightlightColors.length];
+    });
+
+    const moveToElement = (element: HTMLElement) => {
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const containerRect = container?.getBoundingClientRect() as DOMRect;
+
+        highlight.style.transform = `translate(${
+          rect.left - containerRect.left
+        }px, ${rect.top - containerRect.top}px)`;
+      }
+    };
+  }, []);
+
   return (
     <>
       <Header />
-
-      <div className="container">
+      <div className="container" ref={containerRef}>
         <div className="grid">
           <div className="grid-row">
             <div className="grid-item">
@@ -37,8 +77,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <div className="highlight" />
+        <div className="highlight" ref={highlightRef} />
       </div>
       <Footer />
     </>
