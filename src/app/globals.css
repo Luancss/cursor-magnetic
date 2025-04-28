@@ -56,7 +56,19 @@ footer p {
 }
 
 .grid-row, .grid-item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.grid-row:nth-child(1) {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.grid-item:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .grid-item:not(:last-child) {
@@ -73,7 +85,7 @@ footer p {
   left: 0;
   background-color: #FFFFFF;
   pointer-events: none;
-  transform: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 900px) {
