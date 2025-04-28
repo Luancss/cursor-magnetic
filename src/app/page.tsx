@@ -10,8 +10,10 @@ export default function Home() {
 
   useEffect(() => {
     const container = containerRef.current;
-    const highlight = highlightRef.current;
-    const gridItems = container?.querySelectorAll(".grid-item");
+    const highlight = (highlightRef.current as HTMLDivElement) || null;
+    const gridItems = container?.querySelectorAll(
+      ".grid-item"
+    ) as NodeListOf<HTMLElement>;
     const firstItem = gridItems?.[0];
 
     const hightlightColors = [
@@ -23,8 +25,23 @@ export default function Home() {
       "#21F6FF",
       "#818D92",
       "#22AAA1",
-    ];
-  });
+    ] as string[];
+
+    gridItems?.forEach((item, index) => {
+      item.dataset.color = hightlightColors[index % hightlightColors.length];
+    });
+
+    const moveToElement = (element: HTMLElement) => {
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const containerRect = container?.getBoundingClientRect() as DOMRect;
+
+        highlight.style.transform = `translate(${
+          rect.left - containerRect.left
+        }px, ${rect.top - containerRect.top}px)`;
+      }
+    };
+  }, []);
 
   return (
     <>
