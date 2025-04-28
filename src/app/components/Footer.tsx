@@ -1,3 +1,5 @@
+import "../globals.css";
+
 export const Footer = () => {
   return (
     <footer>
