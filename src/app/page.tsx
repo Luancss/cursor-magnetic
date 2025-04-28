@@ -9,14 +9,16 @@ export default function Home() {
   const highlightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
+    const container = (containerRef.current as HTMLDivElement) || null;
     const highlight = (highlightRef.current as HTMLDivElement) || null;
+
     const gridItems = container?.querySelectorAll(
       ".grid-item"
     ) as NodeListOf<HTMLElement>;
+
     const firstItem = gridItems?.[0];
 
-    const hightlightColors = [
+    const highlightColors = [
       "#E24E1B",
       "#4381C1",
       "#F79824",
@@ -27,19 +29,44 @@ export default function Home() {
       "#22AAA1",
     ] as string[];
 
-    gridItems?.forEach((item, index) => {
-      item.dataset.color = hightlightColors[index % hightlightColors.length];
+    gridItems.forEach((item, index) => {
+      item.dataset.color = highlightColors[index % highlightColors.length];
     });
 
     const moveToElement = (element: HTMLElement) => {
       if (element) {
         const rect = element.getBoundingClientRect();
-        const containerRect = container?.getBoundingClientRect() as DOMRect;
+        const containerRect = container.getBoundingClientRect() as DOMRect;
 
         highlight.style.transform = `translate(${
           rect.left - containerRect.left
         }px, ${rect.top - containerRect.top}px)`;
+        highlight.style.width = `${rect.width}px`;
+        highlight.style.height = `${rect.height}px`;
+        highlight.style.backgroundColor = element.dataset.color!;
       }
+    };
+
+    const moveHightlight = (e: MouseEvent) => {
+      const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+
+      if (hoveredElement && hoveredElement.classList.contains("grid-item")) {
+        moveToElement(hoveredElement as HTMLElement);
+      } else if (
+        hoveredElement &&
+        hoveredElement.parentElement &&
+        hoveredElement.parentElement.classList.contains("grid-item")
+      ) {
+        moveToElement(hoveredElement.parentElement);
+      }
+    };
+
+    moveToElement(firstItem);
+
+    container.addEventListener("mousemove", moveHightlight);
+
+    return () => {
+      container.removeEventListener("mousemove", moveHightlight);
     };
   }, []);
 

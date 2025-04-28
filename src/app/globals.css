@@ -10,12 +10,14 @@ body {
 }
 
 p {
+  text-transform: uppercase;
   color: #FFFFFF;
   font-size: 13px;
   font-weight: 500;
 }
 
-header, footer {
+header,
+footer {
   position: fixed;
   width: 100vw;
   padding: 1em;
@@ -31,25 +33,31 @@ header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+footer {
+  bottom: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2); 
+}
+
 header p:not(first:chield),
 footer p {
-  opacity: 0,3;
+  opacity: 0.3;
 }
 
 .container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .grid {
   position: relative;
   margin: 0 auto;
   width: 90%;
-  height: 80%;
+  height: 60%;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.2);	 
@@ -71,21 +79,18 @@ footer p {
   border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.grid-item:not(:last-child) {
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-}	
-
 .grid-item p {
+  position: relative;
   z-index: 2;
 }
 
-.hightlight {
+.highlight {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #FFFFFF;
+  background: #FFFFFF;
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 @media (max-width: 900px) {
@@ -113,7 +118,7 @@ footer p {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .hightlight {
+  .highlight {
     display: none;
   }
 }
