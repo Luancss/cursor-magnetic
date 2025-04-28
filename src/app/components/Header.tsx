@@ -1,3 +1,8 @@
 export const Header = () => {
-  return <div>Header</div>;
+  return (
+    <header>
+      <p>Cursor Magnetic</p>
+      <p>Experiment LC</p>
+    </header>
+  );
 };
